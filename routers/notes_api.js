@@ -3,33 +3,36 @@ const Note = require("../models/Note");
 const router = express.Router();
 //save data
 router.post("/save", async (req, res) => {
-    const { name,password, text, fontfamily, fontsize, italic, underline, alignment } = req.body;
-
-    if ( !name ||!password || !text || !fontfamily || !fontsize || !alignment) {
-        return res.status(400).json({ error: "All fields are required" });
+    const {
+      name, password, text, fontfamily, fontsize, italic, underline, alignment 
+    } = req.body;
+  
+    // Validate required fields
+    if (!name || !password || !text || !fontfamily || !fontsize || !alignment) {
+      return res.status(400).json({ error: "All fields are required" });
     }
-
+  
     try {
-        const note = new Note({
-        
-            name,
-            text,
-            fontfamily,
-            password,
-            fontsize,
-            italic,
-            underline,
-            alignment
-        });
-
-        await note.save();
-        console.log("saving")
-        res.status(201).json({ message: "Note saved successfully", note });
+      const note = new Note({
+        name,
+        text,
+        fontfamily,
+        password,
+        fontsize,
+        italic,
+        underline,
+        alignment,
+      });
+  
+      await note.save();
+      console.log("Saving note...");
+      res.status(201).json({ message: "Note saved successfully", note });
     } catch (error) {
-        console.error("Error saving note:", error);
-        res.status(500).json({ error: "Failed to save note" });
+      console.error("Error saving note:", error.message); // Log detailed error
+      res.status(500).json({ error: "Failed to save note" });
     }
-});
+  });
+  
 //fetch all data based on recent time time 
 router.get("/notes", async (req, res) => {
     try {
