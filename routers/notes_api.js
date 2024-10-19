@@ -44,6 +44,27 @@ router.get("/notes", async (req, res) => {
         res.status(500).json({ error: "Failed to fetch notes" });
     }
 });
+// Get a single note by ID
+router.post("/get_note", async (req, res) => {
+    const { id } = req.body; // Extract id from the request body
+    try {
+        if (!id) {
+            return res.status(400).json({ error: "Note ID is required" });
+        }
+        
+        const note = await Note.findById(id); // Use findById to get the specific note
+        if (!note) {
+            return res.status(404).json({ error: "Note not found" });
+        }
+
+        res.status(200).json(note);
+    } catch (error) {
+        console.error("Error fetching the note:", error);
+        res.status(500).json({ error: "Failed to fetch the note" });
+    }
+});
+
+
 //update data
 router.put("/update/:id", async (req, res) => {
     const { id } = req.params;
