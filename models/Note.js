@@ -6,6 +6,7 @@ const noteSchema=mongoose.Schema(
         password:String,
         fontfamily:String,
         fontsize:String,
+        fontbold:String,
         italic:Boolean,
         underline:Boolean,
         alignment:String,

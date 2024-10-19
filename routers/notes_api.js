@@ -4,11 +4,11 @@ const router = express.Router();
 //save data
 router.post("/save", async (req, res) => {
     const {
-      name, password, text, fontfamily, fontsize, italic, underline, alignment 
+      name, password, text, fontfamily, fontsize, italic, underline, alignment ,fontbold
     } = req.body;
   
     // Validate required fields
-    if (!name || !password || !text || !fontfamily || !fontsize || !alignment) {
+    if (!name || !password || !text || !fontfamily || !fontsize || !alignment || !fontbold) {
       return res.status(400).json({ error: "All fields are required" });
     }
   
@@ -17,6 +17,7 @@ router.post("/save", async (req, res) => {
         name,
         text,
         fontfamily,
+        fontbold,
         password,
         fontsize,
         italic,
@@ -68,12 +69,12 @@ router.post("/get_note", async (req, res) => {
 //update data
 router.put("/update/:id", async (req, res) => {
     const { id } = req.params;
-    const { name, text, fontfamily, fontsize, italic, underline, alignment } = req.body;
+    const { name, text, fontfamily, fontsize, italic, underline, alignment,fontbold } = req.body;
 
     try {
         const updatedNote = await Note.findByIdAndUpdate(
             id,  
-            { name, text, fontfamily, fontsize, italic, underline, alignment }, 
+            { name, text, fontfamily, fontsize, italic, underline, alignment,fontbold }, 
             { new: true }  
         );
 
