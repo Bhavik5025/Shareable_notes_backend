@@ -9,11 +9,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 // Enable CORS for all routes
-app.use(cors({
-    origin: "http://localhost:3001", // Change this to your frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-}));
+app.use(cors());
 
 // Use the Router module
 app.use(Router);
